@@ -1,5 +1,7 @@
 # ImadeoCovert 视频格式转换开发方案
 
+> 历史记录：本文保留当时的仓库名和验证结果。产品现已更名为 **Imadeoconvert**，当前仓库、运行方式及配置迁移说明见 [README](../README.md)。
+
 编写日期：2026-10-25。分析基线：`KLucen/ImadeoCovert` 的 `main` 分支，提交 `eb0fb3caadf57e54b34a56afbd4ec61d25b1acec`，源码版本 `1.17.4`。
 
 本次完成源码与构建配置的静态分析，并核对 FFmpeg 官方文档；尚未启动 GUI、执行转换或验证打包产物。本文件是开发方案，没有实现视频功能。

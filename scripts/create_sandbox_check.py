@@ -7,8 +7,8 @@ import xml.etree.ElementTree as ET
 
 def create(package, output):
     package = package.resolve()
-    if not (package / "ImadeoCovert.exe").is_file():
-        raise ValueError("Select the extracted directory containing ImadeoCovert.exe")
+    if not (package / "Imadeoconvert.exe").is_file():
+        raise ValueError("Select the extracted directory containing Imadeoconvert.exe")
     output = output.resolve()
     output.mkdir(parents=True, exist_ok=False)
     results = output / "results"
@@ -17,15 +17,15 @@ def create(package, output):
     ET.SubElement(config, "Networking").text = "Disable"
     ET.SubElement(config, "MemoryInMB").text = "4096"
     folders = ET.SubElement(config, "MappedFolders")
-    for host, guest, readonly in ((package, r"C:\ImadeoCovert", True), (results, r"C:\TestResults", False)):
+    for host, guest, readonly in ((package, r"C:\Imadeoconvert", True), (results, r"C:\TestResults", False)):
         entry = ET.SubElement(folders, "MappedFolder")
         ET.SubElement(entry, "HostFolder").text = str(host)
         ET.SubElement(entry, "SandboxFolder").text = guest
         ET.SubElement(entry, "ReadOnly").text = str(readonly).lower()
     command = ET.SubElement(config, "LogonCommand")
-    ET.SubElement(command, "Command").text = r'C:\ImadeoCovert\ImadeoCovert.exe --self-test C:\TestResults\self-test'
+    ET.SubElement(command, "Command").text = r'C:\Imadeoconvert\Imadeoconvert.exe --self-test C:\TestResults\self-test'
     ET.indent(config, space="  ")
-    path = output / "ImadeoCovert-offline.wsb"
+    path = output / "Imadeoconvert-offline.wsb"
     ET.ElementTree(config).write(path, encoding="utf-8", xml_declaration=True)
     return path
 

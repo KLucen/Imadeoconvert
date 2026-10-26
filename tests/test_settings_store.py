@@ -61,3 +61,42 @@ def test_invalid_types_are_not_passed_to_tk(tmp_path):
                                "image": {"quality": "bad", "filename_tokens": 3},
                                "video": {"mute": [], "max_height": "bad"}}))
     assert store.load(path) == {"video": {}}
+
+
+def test_rename_migrates_both_modes_before_legacy_and_preserves_previous_file(tmp_path, monkeypatch):
+    previous, legacy, target = (tmp_path / name for name in ("covert.json", "formatix.json", "convert.json"))
+    values = {"lang": "zh", "engine_dir": "my-engine", "quality": 82,
+              "video": {"preset": "webm", "mute": True, "max_height": 720}}
+    store.save(values, previous)
+    original = previous.read_bytes()
+    legacy.write_text('{"lang":"en","quality":30}', encoding="utf-8")
+    monkeypatch.setattr(store, "SETTINGS_PATH", target)
+    monkeypatch.setattr(store, "PREVIOUS_PATH", previous)
+    migrated = store.load(target, legacy)
+    assert migrated == values
+    store.save(migrated, target)
+    assert previous.read_bytes() == original
+    store.save({"lang": "en", "video": {"preset": "mp4"}}, target)
+    assert store.load(target, legacy) == {"lang": "en", "video": {"preset": "mp4"}}
+
+
+@pytest.mark.parametrize("content", ["invalid", '{"schema_version":2}'])
+def test_invalid_previous_settings_are_reported_without_falling_back(tmp_path, content):
+    previous, legacy, target = (tmp_path / name for name in ("covert.json", "formatix.json", "convert.json"))
+    previous.write_text(content, encoding="utf-8")
+    legacy.write_text('{"lang":"zh"}', encoding="utf-8")
+    with pytest.raises(store.SettingsError):
+        store.load(target, legacy, previous=previous)
+    assert previous.read_text(encoding="utf-8") == content
+    assert not target.exists()
+
+
+def test_rename_respects_forgetting_preferences_and_isolates_custom_paths(tmp_path, monkeypatch):
+    previous, target = tmp_path / "covert.json", tmp_path / "convert.json"
+    previous.write_text(json.dumps({"schema_version": 1,
+        "general": {"remember_settings": False, "engine_dir": "tools"},
+        "image": {"quality": 90}, "video": {"preset": "webm"}}), encoding="utf-8")
+    monkeypatch.setattr(store, "PREVIOUS_PATH", previous)
+    assert store.load(target, legacy=None) == {}
+    assert store.load(target, legacy=None, previous=previous) == {
+        "remember_settings": False, "engine_dir": "tools"}

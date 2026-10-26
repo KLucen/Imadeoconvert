@@ -60,7 +60,7 @@ def smoke(archive, report_path):
            and key.upper() not in {"TCL_LIBRARY", "TK_LIBRARY"}}
     windows = Path(env.get("SystemRoot", r"C:\Windows"))
     env["PATH"] = os.pathsep.join(map(str, (windows / "System32", windows)))
-    process = subprocess.Popen([str(package / "ImadeoCovert.exe"), "--self-test", str(output)], cwd=cwd, env=env,
+    process = subprocess.Popen([str(package / "Imadeoconvert.exe"), "--self-test", str(output)], cwd=cwd, env=env,
                                stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                                creationflags=subprocess.CREATE_NO_WINDOW if os.name == "nt" else 0)
     try:

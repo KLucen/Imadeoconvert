@@ -82,7 +82,7 @@ def test_offline_sandbox_maps_app_readonly_and_keeps_results_separate(tmp_path):
     import xml.etree.ElementTree as ET
     app = tmp_path / "中文 & app"
     app.mkdir()
-    (app / "ImadeoCovert.exe").touch()
+    (app / "Imadeoconvert.exe").touch()
     output = tmp_path / "sandbox"
     path = create(app, output)
     config = ET.parse(path).getroot()

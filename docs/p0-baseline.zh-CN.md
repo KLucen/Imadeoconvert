@@ -1,5 +1,7 @@
 # P0 开发与验收记录
 
+> 历史记录：本文保留当时的仓库名和验证结果。产品现已更名为 **Imadeoconvert**，当前仓库、运行方式及配置迁移说明见 [README](../README.md)。
+
 日期：2026-10-25。基于上游源码提交 `eb0fb3caadf57e54b34a56afbd4ec61d25b1acec`。
 
 后续状态（2026-10-26）：P0 已以 `0b8d849` 推送至 `main`，[GitHub Actions 测试](https://github.com/KLucen/ImadeoCovert/actions/runs/40191565406) 已通过。以下内容保留为 P0 实施记录，P1 进展见 [转换核心验收](p1-conversion.zh-CN.md)。

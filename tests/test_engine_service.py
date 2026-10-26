@@ -56,7 +56,7 @@ def test_portable_engine_is_beside_executable_not_internal_or_cwd(tmp_path, monk
     package = tmp_path / "portable app"
     expected = make_pair(package / "tools" / "ffmpeg")
     monkeypatch.setattr(sys, "frozen", True, raising=False)
-    monkeypatch.setattr(sys, "executable", str(package / "ImadeoCovert.exe"))
+    monkeypatch.setattr(sys, "executable", str(package / "Imadeoconvert.exe"))
     monkeypatch.setattr(sys, "_MEIPASS", str(package / "_internal"), raising=False)
     monkeypatch.chdir(tmp_path)
     monkeypatch.setattr(service.shutil, "which", lambda _: pytest.fail("Portable app must not use PATH"))

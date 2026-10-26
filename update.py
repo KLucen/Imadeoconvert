@@ -74,7 +74,7 @@ def fetch_latest_release(timeout=5):
         API_URL,
         headers={
             "Accept": "application/vnd.github+json",
-            "User-Agent": "ImadeoCovert-Update-Check",
+            "User-Agent": "Imadeoconvert-Update-Check",
         },
     )
     try:

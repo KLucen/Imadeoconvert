@@ -10,7 +10,8 @@ import os
 from pathlib import Path
 import tempfile
 
-SETTINGS_PATH = Path.home() / ".imadeocovert_settings.json"
+SETTINGS_PATH = Path.home() / ".imadeoconvert_settings.json"
+PREVIOUS_PATH = Path.home() / ".imadeocovert_settings.json"
 LEGACY_PATH = Path.home() / ".formatix_image_converter_settings.json"
 GENERAL = {"lang", "theme", "remember_settings", "check_updates", "last_update_check", "engine_dir"}
 IMAGE = {"fmt", "quality", "quality_mode", "target_size_val", "target_size_unit",
@@ -61,10 +62,15 @@ def _clean(values, keys):
     return result
 
 
-def load(path=SETTINGS_PATH, legacy=LEGACY_PATH):
+def load(path=SETTINGS_PATH, legacy=LEGACY_PATH, *, previous=None):
     path = Path(path)
-    if path.exists():
-        data = _document(path)
+    # Only discover the user's former product settings for the default app path.
+    # Custom paths (including isolated self-tests) can opt in explicitly.
+    if previous is None and path == SETTINGS_PATH:
+        previous = PREVIOUS_PATH
+    source = path if path.exists() else Path(previous) if previous is not None else None
+    if source is not None and source.exists():
+        data = _document(source)
         general = _clean(data["general"], GENERAL)
         if general.get("remember_settings", True):
             return {**general, **_clean(data["image"], IMAGE), "video": _clean(data["video"], VIDEO)}

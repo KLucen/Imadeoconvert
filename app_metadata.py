@@ -1,8 +1,8 @@
-"""Product identity for the ImadeoCovert fork. SPDX-License-Identifier: GPL-3.0-or-later"""
+"""Product identity for the Imadeoconvert fork. SPDX-License-Identifier: GPL-3.0-or-later"""
 
-APP_NAME = "ImadeoCovert"
+APP_NAME = "Imadeoconvert"
 VERSION = "1.18.0-dev"
-GITHUB_REPO = "KLucen/ImadeoCovert"
+GITHUB_REPO = "KLucen/Imadeoconvert"
 REPOSITORY_URL = f"https://github.com/{GITHUB_REPO}"
 RELEASES_URL = f"{REPOSITORY_URL}/releases"
 API_URL = f"https://api.github.com/repos/{GITHUB_REPO}/releases/latest"

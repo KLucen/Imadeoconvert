@@ -273,7 +273,7 @@ def test_capability_filter_respects_mute_and_can_recover_options(app, engine):
 def test_update_identity_and_development_version():
     import app_metadata
     import update
-    assert update.GITHUB_REPO == "KLucen/ImadeoCovert"
-    assert formatix.APP_NAME == app_metadata.APP_NAME == "ImadeoCovert"
+    assert update.GITHUB_REPO == "KLucen/Imadeoconvert"
+    assert formatix.APP_NAME == app_metadata.APP_NAME == "Imadeoconvert"
     assert update.is_newer("v1.18.0", app_metadata.VERSION)
     assert not update.is_newer("v1.17.4", app_metadata.VERSION)

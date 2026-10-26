@@ -14,8 +14,8 @@ a = Analysis(
 pyz = PYZ(a.pure)
 exe = EXE(
     pyz, a.scripts, [], exclude_binaries=True,
-    name='ImadeoCovert', debug=False, bootloader_ignore_signals=False,
+    name='Imadeoconvert', debug=False, bootloader_ignore_signals=False,
     strip=False, upx=False, console=False, icon=str(root / 'icon.ico'),
     contents_directory='_internal',
 )
-coll = COLLECT(exe, a.binaries, a.datas, strip=False, upx=False, name='ImadeoCovert')
+coll = COLLECT(exe, a.binaries, a.datas, strip=False, upx=False, name='Imadeoconvert')

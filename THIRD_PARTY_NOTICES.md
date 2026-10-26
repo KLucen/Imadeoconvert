@@ -1,6 +1,6 @@
-# ImadeoCovert third-party notices
+# Imadeoconvert third-party notices
 
-ImadeoCovert is derived from [cyber-anderson/Formatix](https://github.com/cyber-anderson/Formatix).
+Imadeoconvert is derived from [cyber-anderson/Formatix](https://github.com/cyber-anderson/Formatix).
 Original copyright: Copyright (C) 2026 cyber-anderson. Application code is
 GPL-3.0-or-later; see `LICENSE`. The portable package includes the application
 source snapshot under `source/` and its build identity in `build-info.json`.

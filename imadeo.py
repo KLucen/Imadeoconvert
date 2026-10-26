@@ -5,7 +5,7 @@ from pathlib import Path
 
 
 def main():
-    parser = argparse.ArgumentParser(description="ImadeoCovert image and video converter")
+    parser = argparse.ArgumentParser(description="Imadeoconvert image and video converter")
     parser.add_argument("--self-test", type=Path, metavar="NEW_DIRECTORY",
                         help="Run isolated offline package checks and write report.json")
     args = parser.parse_args()

@@ -49,7 +49,7 @@ jobs:
       - name: Retain development artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: ImadeoCovert-windows-x64
+          name: Imadeoconvert-windows-x64
           path: |
             dist/*.zip
             dist/*.sha256
@@ -85,7 +85,7 @@ jobs:
         run: python scripts/check_release.py --tag $env:RELEASE_TAG --download-sources
       - uses: actions/download-artifact@v4
         with:
-          name: ImadeoCovert-windows-x64
+          name: Imadeoconvert-windows-x64
           path: dist
       - name: Create draft release for maintainer review
         uses: softprops/action-gh-release@v2

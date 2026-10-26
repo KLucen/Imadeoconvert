@@ -118,10 +118,10 @@ def build(output_dir, archive=None):
     with log.open("w", encoding="utf-8") as stream:
         result = subprocess.run([sys.executable, "-m", "PyInstaller", "--noconfirm", "--clean",
                                  "--distpath", str(staging / "dist"), "--workpath", str(staging / "work"),
-                                 str(ROOT / "ImadeoCovert.spec")], cwd=ROOT, stdout=stream, stderr=subprocess.STDOUT)
+                                 str(ROOT / "Imadeoconvert.spec")], cwd=ROOT, stdout=stream, stderr=subprocess.STDOUT)
     if result.returncode:
         raise RuntimeError(f"PyInstaller failed; see {log}")
-    package = staging / "dist/ImadeoCovert"
+    package = staging / "dist/Imadeoconvert"
     target_engine = package / "tools/ffmpeg"
     target_engine.mkdir(parents=True)
     for name in ("ffmpeg.exe", "ffprobe.exe", "LICENSE", "README.txt"):
@@ -135,7 +135,7 @@ def build(output_dir, archive=None):
                            ("docs/portable-readme.zh-CN.md", "使用说明.txt"), ("tools/release-policy.json", "release-policy.json")):
         shutil.copy2(ROOT / source, package / target)
     # Include the exact application source snapshot; only Git-tracked source paths.
-    source_zip = package / "source/ImadeoCovert-source.zip"
+    source_zip = package / "source/Imadeoconvert-source.zip"
     source_zip.parent.mkdir()
     with zipfile.ZipFile(source_zip, "x", compression=zipfile.ZIP_DEFLATED) as bundle:
         for name in git("ls-files", "-z").split("\0"):

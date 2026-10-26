@@ -1,6 +1,6 @@
-# ImadeoCovert 便携开发版
+# Imadeoconvert 便携开发版
 
-Windows 10/11 x64。完整解压 ZIP 后运行 `ImadeoCovert.exe`。
+Windows 10/11 x64。完整解压 ZIP 后运行 `Imadeoconvert.exe`。
 请保留同目录下的 `_internal`、`tools`、`licenses` 等文件；不要只复制 EXE。
 程序自带 Python 运行时和 FFmpeg / FFprobe，不需要安装 Python 或设置 FFmpeg PATH。
 
@@ -16,8 +16,9 @@ Windows 10/11 x64。完整解压 ZIP 后运行 `ImadeoCovert.exe`。
 仍可用。引擎“详情”和任务“详情”包含诊断信息。程序不会自动下载引擎。
 
 转换无需网络。默认的可选更新检查会访问 GitHub；需要完全离线时可在设置中关闭。
-设置保存在用户目录的 `.imadeocovert_settings.json`，不写入安装目录；旧 Formatix
-设置只读取迁移，保留原文件。程序目录可放在只读位置，输出目录需要写入权限。
+设置保存在用户目录的 `.imadeoconvert_settings.json`，不写入安装目录。新文件不存在
+时优先读取旧 `.imadeocovert_settings.json`，其次读取 Formatix 设置；迁移保留原文件。
+程序目录可放在只读位置，输出目录需要写入权限。
 
 这是一份未经代码签名的开发构建。`build-info.json` 标识代码、依赖和引擎版本，
 `package-manifest.json` 记录文件哈希，ZIP 旁的 `.sha256` 用于核对下载完整性。
@@ -26,10 +27,10 @@ Windows 10/11 x64。完整解压 ZIP 后运行 `ImadeoCovert.exe`。
 
 维护者验收命令（测试目录必须不存在）：
 
-    ImadeoCovert.exe --self-test C:\Temp\Imadeo-self-test-new
+    Imadeoconvert.exe --self-test C:\Temp\Imadeo-self-test-new
 
 此模式禁用 Python 网络连接，在新目录生成样本与结果，检查真实 GUI 和编码器，
 写入 `report.json` 后退出。它不修改用户设置，也不会在普通启动时自动执行。
 
-项目与源码：https://github.com/KLucen/ImadeoCovert
-发行页面：https://github.com/KLucen/ImadeoCovert/releases
+项目与源码：https://github.com/KLucen/Imadeoconvert
+发行页面：https://github.com/KLucen/Imadeoconvert/releases
