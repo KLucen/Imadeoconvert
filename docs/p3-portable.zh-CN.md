@@ -1,7 +1,8 @@
 # P3 便携构建、产物验收与发行准备
 
-产品现统一更名为 Imadeoconvert；本文构建命令和产物名已同步更新，历史 CI 链接
-及阶段测试记录仍指向当时的提交。当前仓库和使用说明见 [README](../README.md)。
+本文保留 P3 阶段的设计及验收记录。当前版本已增加公开 RC 发布与 EXE 安装包，
+最新流程见 [Windows 安装包说明](windows-installer.zh-CN.md) 和 [README](../README.md)；
+下方历史 CI 链接及测试数字仍指向当时的提交。
 
 日期：2026-10-26。P1、P2 已快进合入并推送到 `main`，远端提交为
 `644fbe33e74255526242c438c9b68acefd23a2b4`。该提交的
@@ -21,7 +22,7 @@ python -m pip check
 # 已安装 tools/ffmpeg 时不必重复执行；全新检出需要先安装。
 python scripts/setup_ffmpeg.py
 python scripts/build_portable.py --output-dir dist/my-build
-python scripts/smoke_portable.py dist/my-build/Imadeoconvert-1.18.0-dev-windows-x64.zip
+python scripts/smoke_portable.py dist/my-build/Imadeoconvert-1.18.0-rc.1-windows-x64.zip
 ```
 
 `build_portable.py` 仅支持 Windows x64 的 64 位 Python。每次尝试都建立独立的
@@ -37,7 +38,7 @@ python scripts/smoke_portable.py dist/my-build/Imadeoconvert-1.18.0-dev-windows-
 ## 产物结构
 
 ```text
-Imadeoconvert-1.18.0-dev-windows-x64/
+Imadeoconvert-1.18.0-rc.1-windows-x64/
   Imadeoconvert.exe
   _internal/                    Python、Tk、图片库和原生依赖
   tools/ffmpeg/
@@ -88,7 +89,7 @@ PATH 隔离和 Python socket 禁用是在本机做的模拟，不能替代一台
 已提供可复用的离线 Sandbox 配置生成器：
 
 ```powershell
-python scripts/create_sandbox_check.py "D:\extracted\Imadeoconvert-1.18.0-dev-windows-x64" test-results/sandbox-new
+python scripts/create_sandbox_check.py "D:\extracted\Imadeoconvert-1.18.0-rc.1-windows-x64" test-results/sandbox-new
 ```
 
 在已支持 Windows Sandbox 的机器上打开生成的 `.wsb`：网络被禁用，程序目录只读

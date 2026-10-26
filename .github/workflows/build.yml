@@ -1,4 +1,4 @@
-name: Portable Windows build
+name: Windows ZIP and EXE release
 
 on:
   push:
@@ -46,14 +46,34 @@ jobs:
           python scripts/smoke_portable.py $package.FullName
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
+      - name: Set up verified portable installer compiler
+        shell: pwsh
+        run: ./scripts/setup_inno.ps1
+
+      - name: Build per-user installer
+        shell: pwsh
+        run: |
+          $package = Get-ChildItem -LiteralPath dist -Filter '*.zip'
+          python scripts/build_installer.py $package.FullName
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Verify install, app execution and uninstall
+        shell: pwsh
+        run: |
+          $installer = Get-ChildItem -LiteralPath dist -Filter '*-setup.exe'
+          python scripts/smoke_installer.py $installer.FullName
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
       - name: Retain development artifacts
         uses: actions/upload-artifact@v4
         with:
           name: Imadeoconvert-windows-x64
           path: |
             dist/*.zip
+            dist/*-setup.exe
             dist/*.sha256
             dist/build-summary.json
+            dist/installer-build.json
           if-no-files-found: error
           retention-days: 14
 
@@ -65,10 +85,12 @@ jobs:
           path: |
             test-results/*.xml
             test-results/portable-smoke.json
+            test-results/installer-smoke.json
             build/portable/*/pyinstaller.log
+            build/installer/*/compiler.log
           retention-days: 14
 
-  draft-release:
+  release:
     if: startsWith(github.ref, 'refs/tags/v')
     needs: build
     runs-on: windows-latest
@@ -82,18 +104,27 @@ jobs:
       - name: Check tag and corresponding-source material
         env:
           RELEASE_TAG: ${{ github.ref_name }}
-        run: python scripts/check_release.py --tag $env:RELEASE_TAG --download-sources
+        shell: pwsh
+        run: |
+          if ($env:RELEASE_TAG -match '-rc\.') {
+            python scripts/check_release.py --tag $env:RELEASE_TAG --download-sources --preview
+          } else {
+            python scripts/check_release.py --tag $env:RELEASE_TAG --download-sources
+          }
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - uses: actions/download-artifact@v4
         with:
           name: Imadeoconvert-windows-x64
           path: dist
-      - name: Create draft release for maintainer review
+      - name: Publish tested release assets
         uses: softprops/action-gh-release@v2
         with:
-          draft: true
+          draft: false
           prerelease: ${{ contains(github.ref_name, '-rc.') }}
+          overwrite_files: false
+          body_path: docs/releases/${{ github.ref_name }}.md
           files: |
             dist/*.zip
+            dist/*-setup.exe
             dist/*.sha256
             release-sources/*
-          generate_release_notes: true

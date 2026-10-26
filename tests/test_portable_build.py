@@ -93,3 +93,19 @@ def test_offline_sandbox_maps_app_readonly_and_keeps_results_separate(tmp_path):
     assert folders[1].findtext("ReadOnly") == "false"
     with pytest.raises(FileExistsError):
         create(app, output)
+
+
+def test_preview_requires_recorded_rc_and_does_not_change_audit_status(tmp_path):
+    policy = {"schema_version": 1, "status": "pending", "review_notes": "Unfinished native sources",
+              "required_components": ["ffmpeg"], "source_archives": [],
+              "preview_tags": ["v1.18.0-rc.1"], "preview_notes": "Maintainer requested preview"}
+    validate("v1.18.0-rc.1", "1.18.0-rc.1", policy, tmp_path, preview=True)
+    assert policy["status"] == "pending"
+    with pytest.raises(ValueError, match="review"):
+        validate("v1.18.0-rc.1", "1.18.0-rc.1", policy, tmp_path)
+    for version in ("1.18.0", "1.18.0-rc.2"):
+        with pytest.raises(ValueError, match="Preview"):
+            validate("v" + version, version, policy, tmp_path, preview=True)
+    policy["source_archives"] = [{"file": "source.zip", "sha256": "0" * 64, "components": ["ffmpeg"]}]
+    with pytest.raises(ValueError, match="checksum"):
+        validate("v1.18.0-rc.1", "1.18.0-rc.1", policy, tmp_path, preview=True)

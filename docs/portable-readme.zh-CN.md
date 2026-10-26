@@ -1,4 +1,4 @@
-# Imadeoconvert 便携开发版
+# Imadeoconvert 便携预览版
 
 Windows 10/11 x64。完整解压 ZIP 后运行 `Imadeoconvert.exe`。
 请保留同目录下的 `_internal`、`tools`、`licenses` 等文件；不要只复制 EXE。
@@ -20,7 +20,7 @@ Windows 10/11 x64。完整解压 ZIP 后运行 `Imadeoconvert.exe`。
 时优先读取旧 `.imadeocovert_settings.json`，其次读取 Formatix 设置；迁移保留原文件。
 程序目录可放在只读位置，输出目录需要写入权限。
 
-这是一份未经代码签名的开发构建。`build-info.json` 标识代码、依赖和引擎版本，
+这是一份未经代码签名的 RC 预览构建。`build-info.json` 标识代码、依赖和引擎版本，
 `package-manifest.json` 记录文件哈希，ZIP 旁的 `.sha256` 用于核对下载完整性。
 `THIRD_PARTY_NOTICES.md`、`licenses/` 和 `tools/ffmpeg/LICENSE` 保留原许可材料。
 公开发行前的来源核对状态见 `release-policy.json`。

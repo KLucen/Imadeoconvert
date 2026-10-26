@@ -19,8 +19,8 @@ and executable hashes are retained in `tools/ffmpeg/` and
 - FFmpeg licensing information: https://ffmpeg.org/legal.html
 
 The FFmpeg revision link alone does not identify all sources and build scripts
-for its enabled external libraries. Public-release readiness is tracked in
-`release-policy.json`; development artifacts must not be described as having
+for its enabled external libraries. Stable-release readiness is tracked in
+`release-policy.json`; preview artifacts must not be described as having
 completed the corresponding-source audit.
 
 ## Python and image/GUI components
@@ -34,7 +34,12 @@ In particular, pillow-heif's Python source license differs from the terms of its
 binary wheel. Its supplied `LICENSES_bundled.txt` identifies libheif, libde265,
 x265 and Windows runtime components. Do not describe the complete wheel as
 BSD-only. Its corresponding-source and license compatibility review is included
-in the public-release gate, together with resvg/native runtime dependencies.
+in the stable-release checks, together with resvg/native runtime dependencies.
+The maintainer-requested rc preview leaves this review pending and discloses it in
+the release notes; it does not claim that the source review is complete.
+
+The EXE installer is generated with Inno Setup 6.7.3. Its supplied license text
+is included as `licenses/Inno-Setup.txt` in the installed payload.
 
 No third-party authors endorse this application. All notices and license texts
 remain with their respective components.

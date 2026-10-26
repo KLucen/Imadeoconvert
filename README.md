@@ -9,7 +9,7 @@
 
 Imadeoconvert is a local desktop image and video converter for Windows, derived from [Formatix](https://github.com/cyber-anderson/Formatix). It adds batch video conversion, cancellation, media information and portable build verification to the original image workflow.
 
-> **当前版本：1.18.0-dev。** 图片与视频功能、便携 ZIP 构建和产物自检已实现。公开二进制发行仍待第三方对应源码材料核对及干净 Windows 验收；当前不宣称已有正式安装包。源码、构建记录和后续发行均以 [本仓库](https://github.com/KLucen/Imadeoconvert) 为准。
+> **公开预览版：1.18.0-rc.1。** 提供 Windows x64 EXE 安装包和便携 ZIP，详见 [Release](https://github.com/KLucen/Imadeoconvert/releases/tag/v1.18.0-rc.1)。第三方对应源码材料核对及干净 Windows 验收仍为正式版待办，详见 [发行说明](docs/releases/v1.18.0-rc.1.md)。
 
 ## 功能
 
@@ -46,9 +46,11 @@ python imadeo.py
 
 `setup_ffmpeg.py` 下载并校验 [引擎清单](tools/ffmpeg-manifest.json) 中固定版本的 FFmpeg / FFprobe，放入项目的 `tools/ffmpeg/`。首次安装依赖和引擎需要联网；转换过程无需联网。程序启动时不会自动下载引擎。
 
-### Windows 便携 ZIP
+### Windows EXE 安装包与便携 ZIP
 
-维护者可按下文构建 ZIP；后续公开包会列在 [Releases](https://github.com/KLucen/Imadeoconvert/releases)。使用便携包时：
+从 [Releases](https://github.com/KLucen/Imadeoconvert/releases/tag/v1.18.0-rc.1) 下载 `*-setup.exe`，按向导安装到当前用户目录，无需管理员权限。开始菜单可启动程序，Windows“已安装的应用”中可卸载；卸载保留设置和用户创建的文件。安装器界面为英文，软件界面支持中文。
+
+也可以下载便携 ZIP：
 
 1. 完整解压 ZIP 到任意可读取目录。
 2. 运行 `Imadeoconvert.exe`，保留旁边的 `_internal`、`tools`、`licenses` 等目录。
@@ -109,12 +111,12 @@ python -m pytest -q
 
 # 输出目录可自选；保留旧构建，不覆盖同名 ZIP。
 python scripts/build_portable.py --output-dir dist/my-build
-python scripts/smoke_portable.py dist/my-build/Imadeoconvert-1.18.0-dev-windows-x64.zip
+python scripts/smoke_portable.py dist/my-build/Imadeoconvert-1.18.0-rc.1-windows-x64.zip
 ```
 
 构建使用 [Imadeoconvert.spec](Imadeoconvert.spec)。ZIP 附带 SHA-256、应用源码快照、第三方许可、构建身份和逐文件清单。自检从含中文、空格、括号的路径启动 EXE，清除 Conda/Python 环境变量，并限制 PATH；覆盖图片编码、MP4/MKV/WebM、无音轨输入和取消回收。这种本机隔离测试不能替代干净 Windows 实测。
 
-CI 在 Windows 上运行 Python 3.10 / 3.12 回归。便携构建工作流支持手动执行；标签发布会先校验版本及 [第三方对应源码材料](tools/release-policy.json)，当前仍处于 `pending`。验证范围与剩余发行工作见 [P3 构建说明](docs/p3-portable.zh-CN.md) 和 [第三方许可说明](THIRD_PARTY_NOTICES.md)。
+CI 在 Windows 上运行 Python 3.10 / 3.12 回归。ZIP / EXE 构建工作流支持手动执行，标签发布前执行两种产物自检。稳定版本要求 [第三方对应源码材料](tools/release-policy.json) 完成核对；本次维护者指定的 RC 预览版如实保留 `pending` 状态。安装包构建方法见 [安装包说明](docs/windows-installer.zh-CN.md)。验证范围与剩余发行工作见 [P3 构建说明](docs/p3-portable.zh-CN.md) 和 [第三方许可说明](THIRD_PARTY_NOTICES.md)。
 
 | 目录 / 模块 | 职责 |
 | --- | --- |

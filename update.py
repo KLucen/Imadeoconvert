@@ -32,6 +32,7 @@ formatix.py).
 """
 
 import json
+import re
 import urllib.request
 import urllib.error
 
@@ -59,8 +60,15 @@ def parse_version(version_str):
 
 def is_newer(remote_version, current_version):
     """True, если remote_version строго новее current_version."""
-    remote, current = parse_version(remote_version), parse_version(current_version)
-    return remote > current or (remote == current and "-" in current_version and "-" not in remote_version)
+    def release_key(value):
+        match = re.fullmatch(r"[vV]?(\d+)\.(\d+)\.(\d+)(?:-(dev|rc)(?:\.(\d+))?)?", value.strip())
+        if match is None:
+            return None
+        major, minor, patch, channel, number = match.groups()
+        return (int(major), int(minor), int(patch), {"dev": 0, "rc": 1, None: 2}[channel], int(number or 0))
+
+    remote, current = release_key(remote_version), release_key(current_version)
+    return remote is not None and current is not None and remote > current
 
 
 def fetch_latest_release(timeout=5):

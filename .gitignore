@@ -7,6 +7,7 @@ __pycache__/
 build/
 dist/
 tools/ffmpeg/
+tools/innosetup-*/
 test-results/
 release-sources/
 *.egg-info/
